@@ -7,15 +7,15 @@ module.exports = function(app) {
 	app.post('/payments/payment', function(req, res){
 		var payment = req.body;
 		console.log('processing a new payment request...');
+		var connection = app.db.connectionFactory();
+		var paymentDAO = new app.db.PaymentDAO(connection);
 
 		payment.status = "CREATED";
 		payment.date = new Date;
 
-		var connection = app.db.connectionFactory();
-		var paymentDAO = new app.db.PaymentDAO(connection);
 
 		paymentDAO.save(payment, function(error, result){
-			console.log('payment created');
+			console.log('payment created: ' + result);
 			res.json(payment)
 		});
 
