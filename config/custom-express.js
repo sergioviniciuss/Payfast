@@ -10,7 +10,8 @@ module.exports = function() {
 
 	consign()
 	.include('controllers')
-	.into(app); //a variavel App passa a ter todo o conhecimento da pasta controllers
+	.then('db')
+	.into(app); //a variavel App passa a ter todo o conhecimento da pasta controllers e depois persistence
 
 	return app;
 }

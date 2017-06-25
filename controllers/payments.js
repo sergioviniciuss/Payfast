@@ -10,7 +10,15 @@ module.exports = function(app) {
 
 		payment.status = "CREATED";
 		payment.date = new Date;
-		res.send(payment);
+
+		var connection = app.db.connectionFactory();
+		var paymentDAO = new app.db.PaymentDAO(connection);
+
+		paymentDAO.save(payment, function(error, result){
+			console.log('payment created');
+			res.json(payment)
+		});
+
 	});
 	
 }
